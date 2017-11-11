@@ -1,13 +1,29 @@
+from bs4 import BeautifulSoup as soup
+import requests
 import json
 
 
 print('Loading function')
 
 
-def lambda_handler(event, context):
-    # print("Received event: " + json.dumps(event, indent=2))
-    print("value1 = " + event['key1'])
-    print("value2 = " + event['key2'])
-    print("value3 = " + event['key3'])
-    return event['key1']  # Echo back the first key value
-    # raise Exception('Something went wrong')
+# def lambda_handler(event, context):
+def lambda_handler(event):
+    res = {}
+    users = event["usernames"].split(' ')
+
+    for user in users:
+        base_url = 'https://github.com/{}'.format(user)
+        response = requests.get(base_url)
+
+        page_soup = soup(response.text, 'html.parser')
+        weeks = page_soup.findAll()
+
+        days = 30
+        while days >= 0:
+
+            days -= 1
+
+    return json.dumps(res)
+
+
+lambda_handler({"usernames": "hoganmcdonald pete-wildberger"})
