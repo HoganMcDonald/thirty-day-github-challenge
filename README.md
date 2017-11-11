@@ -1,5 +1,37 @@
 # Thirty Day GitHub Challenge
 
+I built the api, but no front end. It's hosted on an AWS Lambda with open access.
+
+Make a POST request to:
+https://3wp6tucn35.execute-api.us-east-1.amazonaws.com/prod/30daygithub
+
+with a request body that looks like this:
+{
+  "usernames": "hoganmcdonald pete-wildberger",
+  "days": "5"
+}
+
+Separate usernames with a space and you will get results back for each person you listed. However, because the api is scraping each users web page, a large list could result in a lot of latency. the Lambda will time out at a certain point. I could allocate more resources to it, but not for free.
+
+response should look like:
+
+[
+  {
+    \"user\": \"hoganmcdonald\",
+    \"total_commits\": 78,
+    \"days_active\": 18,
+    \"percentage_active\": 0.4
+  },
+  {
+    \"user\": \"pete-wildberger\",
+    \"total_commits\": 146,
+    \"days_active\": 32,
+    \"percentage_active\": 0.7111111111111111
+  }
+]
+
+## instructions for challenge
+
 1. Fork this repository
 2. Use React to create a project that allows input of a GitHub username (e.g. lukeschlangen) and returns their:
   - Percentage of last 30 days with a contribution (green square)
